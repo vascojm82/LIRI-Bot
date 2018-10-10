@@ -16,7 +16,10 @@ let env = require('dotenv').config({path: 'keys/.env'}),
 let searchSpotify = (song) => {
   spotify.search({ type: 'track', query: song, limit: 1 })
     .then((response) => {
-      console.log(prettyjson.render(response, {noColor: false}));
+      console.log('Artist : ' +  response.tracks.items[0].artists[0].name);
+      console.log('Song name :' + response.tracks.items[0].name);
+      console.log('URL :' + response.tracks.items[0].artists[0].external_urls.spotify);
+      console.log('Album Name :' + response.tracks.items[0].name);
     })
     .catch((err) => {
       console.log(err);
@@ -28,7 +31,11 @@ let searchBandsInTown = (queryURL) => {
     if(error)
       console.log(error);
     else{
-      console.log(prettyjson.render(body, {noColor: false}));
+      const res = JSON.parse(body);
+
+      console.log('Venue: ' + res[0].venue.name);
+      console.log('Venue location: ' + res[0].venue.city + ', ' + res[0].venue.region +'. ' + res[0].venue.country);
+      console.log('Date : ' + res[0].datetime);
     }
   })
 }
